@@ -18,10 +18,18 @@
       ResultSet listado = s.executeQuery ("SELECT * FROM socio");
     %>
     <table>
-      <tr><th>Código</th><th>Nombre</th><th>Estatura</th><th>Edad</th><th>Localidad</th></tr>
+      <tr><th></th><th>Código</th><th>Nombre</th><th>Estatura</th><th>Edad</th><th>Localidad</th></tr>
+
     <%
       while (listado.next()) {
           out.println("<tr><td>");
+          %>
+        <form method="get" action="buscarSocio.jsp">
+            <input type="hidden" name="codigo" value="<%=listado.getString("socioID") %>"/>
+            <input type="submit" value="Detalle">
+        </form>
+        </td><td>
+        <%
           out.println(listado.getString("socioID") + "</td>");
           out.println("<td>" + listado.getString("nombre") + "</td>");
           out.println("<td>" + listado.getString("estatura") + "</td>");
