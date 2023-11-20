@@ -22,7 +22,11 @@
             ResultSet listado = s.executeQuery ("SELECT * FROM socio where socioID="+Integer.parseInt(request.getParameter("codigo")));
 
             listado.next();
-            out.println(listado.getString("socioID") + " " + listado.getString ("nombre"));
+            out.println(listado.getString("socioID") + ", ");
+            out.println(listado.getString("nombre") + ", ");
+            out.println(listado.getString("estatura") + ", ");
+            out.println(listado.getString("edad") + ", ");
+            out.println(listado.getString("localidad"));
             listado.close();
             s.close();
             conexion.close();
