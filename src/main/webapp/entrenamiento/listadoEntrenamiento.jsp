@@ -58,10 +58,10 @@
         try {
             s.close();
         } catch (Exception e) { /* Ignored */ }
-            try {
-                listado.close();
-            } catch (Exception e) { /* Ignored */ }
-        }
+        try {
+            listado.close();
+        } catch (Exception e) { /* Ignored */ }
+    }
     %>
 </table>
 </body>
