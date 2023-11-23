@@ -16,13 +16,16 @@
     <title>Listado Entrenamiento</title>
 </head>
 <body>
-<h1>Listado de Socios</h1>
+<h1>Listado de Entrenamiento</h1>
 <%
+    Connection conexion=null;
+    Statement s=null;
+    ResultSet listado=null;
     try{
         Class.forName("com.mysql.cj.jdbc.Driver");
-        Connection conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/baloncesto","mattialu", "");
-        Statement s = conexion.createStatement();
-        ResultSet listado = s.executeQuery ("SELECT entrenamientos.*, nombre FROM entrenamientos NATURAL JOIN socio");
+        conexion = DriverManager.getConnection("jdbc:mysql://localhost:3306/baloncesto","mattialu", "");
+        s = conexion.createStatement();
+        listado = s.executeQuery ("SELECT entrenamientos.*, nombre FROM entrenamientos NATURAL JOIN socio");
 %>
 <table>
     <tr><th>Codigo</th><th>Socio</th><th>Tipo</th><th>Ubicacion</th><th>Fecha</th><th><a href="formularioEntrenamiento.jsp">+</a></th></tr>
@@ -48,7 +51,17 @@
         listado.close();
     }catch (Exception e){
         out.println("Error");
-    }
+    }  finally {
+        try {
+            conexion.close();
+        } catch (Exception e) { /* Ignored */ }
+        try {
+            s.close();
+        } catch (Exception e) { /* Ignored */ }
+            try {
+                listado.close();
+            } catch (Exception e) { /* Ignored */ }
+        }
     %>
 </table>
 </body>

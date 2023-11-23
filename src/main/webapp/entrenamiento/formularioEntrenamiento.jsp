@@ -10,7 +10,7 @@
 <head>
 </head>
 <body>
-<h2>Introduzca los datos del nuevo socio:</h2>
+<h2>Introduzca los datos del nuevo entrenamiento:</h2>
 <form method="get" action="grabarEntrenamiento.jsp">
     Nº entrenamiento <input type="text" name="idEntrenamiento"/></br>
     Nº socio <input type="text" name="idSocio"/></br>
