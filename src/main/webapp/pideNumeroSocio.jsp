@@ -24,7 +24,7 @@
       while (listado.next()) {
           out.println("<tr><td>");
           %>
-        <form method="get" action="buscarSocio.jsp">
+        <form method="get" action="detalleSocio.jsp">
             <input type="hidden" name="codigo" value="<%=listado.getString("socioID") %>"/>
             <input type="submit" value="Detalle">
         </form>

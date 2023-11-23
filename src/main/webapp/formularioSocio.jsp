@@ -14,5 +14,14 @@
       Localidad <input type="text" name="localidad"/></br>
       <input type="submit" value="Aceptar">
     </form>
+    <div style="color: red;">
+      <p>
+        <%=
+        session.getAttribute("error") == null ?
+                "" : session.getAttribute("error")
+        %>
+        <% session.removeAttribute("error"); %>
+      </p>
+    </div>
   </body>
 </html>

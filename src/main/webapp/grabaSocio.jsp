@@ -109,8 +109,9 @@
 
         out.println("Socio dado de alta.");
 } else {
-        out.println("Error de validación!");
-    }
+        session.setAttribute("error", "Error de validación");
+        response.sendRedirect("formularioSocio.jsp");
+}
 %>
 
 </body>
