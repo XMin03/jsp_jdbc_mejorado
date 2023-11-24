@@ -24,7 +24,6 @@
     fecha <input type="date" name="fecha"/></br>
     <input type="submit" value="Aceptar">
 </form>
-<a href="../index.jsp">Volver</a>
 <table>
     <tr>
         <%

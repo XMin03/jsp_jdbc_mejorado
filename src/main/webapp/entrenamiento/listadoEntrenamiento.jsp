@@ -64,5 +64,6 @@
     }
     %>
 </table>
+<a href="../index.jsp">Volver</a>
 </body>
 </html>
