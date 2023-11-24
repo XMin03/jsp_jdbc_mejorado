@@ -1,7 +1,10 @@
+<%@ page import="java.util.ArrayList" %>
+<%@ page import="java.util.Objects" %>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" type="text/css" href="estilos.css" />
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
   </head>
   <body>
@@ -14,13 +17,24 @@
       Localidad <input type="text" name="localidad"/></br>
       <input type="submit" value="Aceptar">
     </form>
-    <div style="color: red;">
+    <table>
+      <tr>
+      <%
+        ArrayList<String> errores = (ArrayList<String>) session.getAttribute("error");
+        if(errores==null){
+            out.println("");
+        }else{
+            for (String errore : errores) {
+                out.println("<td>" + errore + "</td>");
+            }
+        }
+      %>
+      <% session.removeAttribute("error"); %>
+      </tr>
+    </table>
+    <div >
       <p>
-        <%=
-        session.getAttribute("error") == null ?
-                "" : session.getAttribute("error")
-        %>
-        <% session.removeAttribute("error"); %>
+
       </p>
     </div>
   </body>

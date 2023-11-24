@@ -1,4 +1,4 @@
-<%--
+<%@ page import="java.util.ArrayList" %><%--
   Created by IntelliJ IDEA.
   User: mattialu
   Date: 23/11/23
@@ -8,6 +8,7 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <link rel="stylesheet" type="text/css" href="../estilos.css" />
 </head>
 <body>
 <h2>Introduzca los datos del nuevo entrenamiento:</h2>
@@ -23,14 +24,20 @@
     fecha <input type="date" name="fecha"/></br>
     <input type="submit" value="Aceptar">
 </form>
-<div style="color: red;">
-    <p>
-        <%=
-        session.getAttribute("error") == null ?
-                "" : session.getAttribute("error")
+<table>
+    <tr>
+        <%
+            ArrayList<String> errores = (ArrayList<String>) session.getAttribute("error");
+            if(errores==null){
+                out.println("");
+            }else{
+                for (String errore : errores) {
+                    out.println("<td>" + errore + "</td>");
+                }
+            }
         %>
         <% session.removeAttribute("error"); %>
-    </p>
-</div>
+    </tr>
+</table>
 </body>
 </html>

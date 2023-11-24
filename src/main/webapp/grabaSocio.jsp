@@ -1,6 +1,7 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.Objects" %>
 <%@ page import="java.io.IOException" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -10,48 +11,48 @@
 <body>
 <%
     //CÓDIGO DE VALIDACIÓN
-    boolean valida = true;
     int numero = -1;
     String nombre = null;
     int estatura = -1;
     int edad = -1;
     String localidad = null;
-    try {
+    ArrayList<String> errores=new ArrayList<>();
+    try{
         numero = Integer.parseInt(request.getParameter("numero"));
-
-        //UTILIZO LOS CONTRACTS DE LA CLASE Objects PARA LA VALIDACIÓN
-        //             v---- LANZA NullPointerException SI EL PARÁMETRO ES NULL
+    }catch (NumberFormatException e){
+        errores.add("Nª de socio no es un número");
+    }
+    try{
         Objects.requireNonNull(request.getParameter("nombre"));
-        //CONTRACT nonBlank..
-        //UTILIZO isBlank SOBRE EL PARÁMETRO DE TIPO String PARA CHEQUEAR QUE NO ES UN PARÁMETRO VACÍO "" NI CADENA TODO BLANCOS "    "
-        //          |                                EN EL CASO DE QUE SEA BLANCO LO RECIBIDO, LANZO UNA EXCEPCIÓN PARA INVALIDAR EL PROCESO DE VALIDACIÓN
-        //          -------------------------v                      v---------------------------------------|
         if (request.getParameter("nombre").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
         nombre = request.getParameter("nombre");
-
-
+    }catch (NullPointerException e){
+        errores.add("Nombre no puede ser nulo");
+    }catch (RuntimeException e){
+        errores.add("Nombre no puede estar vacío");
+    }
+    try{
         estatura = Integer.parseInt(request.getParameter("estatura"));
-
+    }catch (NumberFormatException e){
+        errores.add("Estatura no es un número");
+    }
+    try{
         edad = Integer.parseInt(request.getParameter("edad"));
-
-        //UTILIZO LOS CONTRACTS DE LA CLASE Objects PARA LA VALIDACIÓN
-        //             v---- LANZA NullPointerException SI EL PARÁMETRO ES NULL
+    }catch (NumberFormatException e){
+        errores.add("Edad no es un número");
+    }
+    try{
         Objects.requireNonNull(request.getParameter("localidad"));
-        //CONTRACT nonBlank
-        //UTILIZO isBlank SOBRE EL PARÁMETRO DE TIPO String PARA CHEQUEAR QUE NO ES UN PARÁMETRO VACÍO "" NI CADENA TODO BLANCOS "    "
-        //          |                                EN EL CASO DE QUE SEA BLANCO LO RECIBIDO, LANZO UNA EXCEPCIÓN PARA INVALIDAR EL PROCESO DE VALIDACIÓN
-        //          -------------------------v                      v---------------------------------------|
         if (request.getParameter("localidad").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
         localidad = request.getParameter("localidad");
-
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        valida = false;
+    }catch (NullPointerException e){
+        errores.add("Localidad no puede ser nulo");
+    }catch (RuntimeException e){
+        errores.add("Localidad no puede estar vacío");
     }
     //FIN CÓDIGO DE VALIDACIÓN
 
-    if (valida) {
-
+    if (errores.isEmpty()) {
         Connection conn = null;
         PreparedStatement ps = null;
 // 	ResultSet rs = null;
@@ -109,7 +110,7 @@
 
         out.println("Socio dado de alta.");
 } else {
-        session.setAttribute("error", "Error de validación");
+        session.setAttribute("error", errores);
         response.sendRedirect("formularioSocio.jsp");
 }
 %>

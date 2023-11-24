@@ -8,6 +8,7 @@
 <%@page import="java.sql.*" %>
 <%@page import="java.util.Objects" %>
 <%@ page import="java.io.IOException" %>
+<%@ page import="java.util.ArrayList" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <!DOCTYPE html>
 <html>
@@ -17,31 +18,52 @@
 <body>
 <%
     //CÓDIGO DE VALIDACIÓN
-    boolean valida = true;
     int idEnt = -1;
     int idSocio = -1;
     String tipo = null;
     String ubicacion = null;
     String fecha = null;
-    try {
-        idEnt = Integer.parseInt(request.getParameter("idEntrenamiento"));
-        idSocio = Integer.parseInt(request.getParameter("idSocio"));
-        Objects.requireNonNull(request.getParameter("tipo"));
-        if (request.getParameter("tipo").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
-        tipo = request.getParameter("tipo");
-        Objects.requireNonNull(request.getParameter("ubicacion"));
-        if (request.getParameter("ubicacion").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
-        ubicacion = request.getParameter("ubicacion");
-        Objects.requireNonNull(request.getParameter("fecha"));
-        if (request.getParameter("fecha").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
-        fecha = request.getParameter("fecha");
-    } catch (Exception ex) {
-        ex.printStackTrace();
-        valida = false;
-    }
+    ArrayList<String> errores=new ArrayList<>();
+        try{
+            idEnt = Integer.parseInt(request.getParameter("idEntrenamiento"));
+        }catch (NumberFormatException e){
+            errores.add("Nº entrenamiento no es un número");
+        }
+        try{
+            idSocio = Integer.parseInt(request.getParameter("idSocio"));
+        }catch (NumberFormatException e){
+            errores.add("Nº socio no es un número");
+        }
+        try{
+            Objects.requireNonNull(request.getParameter("tipo"));
+            if (request.getParameter("tipo").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
+            tipo = request.getParameter("tipo");
+        }catch (NullPointerException e){
+            errores.add("Tipo no puede ser nulo");
+        }catch (RuntimeException e){
+            errores.add("Tipo no puede estar vacío");
+        }
+        try{
+            Objects.requireNonNull(request.getParameter("ubicacion"));
+            if (request.getParameter("ubicacion").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
+            ubicacion = request.getParameter("ubicacion");
+        }catch (NullPointerException e){
+            errores.add("Ubicacion no puede ser nulo");
+        }catch (RuntimeException e){
+            errores.add("Ubicacion no puede estar vacío");
+        }
+        try{
+            Objects.requireNonNull(request.getParameter("fecha"));
+            if (request.getParameter("fecha").isBlank()) throw new RuntimeException("Parámetro vacío o todo espacios blancos.");
+            fecha = request.getParameter("fecha");
+        }catch (NullPointerException e){
+            errores.add("Fecha no puede ser nulo");
+        }catch (RuntimeException e){
+            errores.add("Fecha no puede estar vacío");
+        }
     //FIN CÓDIGO DE VALIDACIÓN
 
-    if (valida) {
+    if (errores.isEmpty()) {
         Connection conn = null;
         PreparedStatement ps = null;
         try {
@@ -67,8 +89,7 @@
 
 
         } catch (Exception ex) {
-            ex.printStackTrace();
-            valida=false;
+            errores.add("Error al insertar");
         } finally {
             try {
                 ps.close();
@@ -78,10 +99,10 @@
             } catch (Exception e) { /* Ignored */ }
         }
     }
-    if (valida){
+    if (errores.isEmpty()){
         response.sendRedirect("listadoEntrenamiento.jsp");
     }else{
-        session.setAttribute("error", "Error de validación");
+        session.setAttribute("error", errores);
         response.sendRedirect("formularioEntrenamiento.jsp");
     }
 %>
