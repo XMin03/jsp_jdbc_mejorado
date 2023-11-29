@@ -16,6 +16,7 @@
     int estatura = -1;
     int edad = -1;
     String localidad = null;
+    //almacenar los errores en un array e inviarlo
     ArrayList<String> errores=new ArrayList<>();
     try{
         numero = Integer.parseInt(request.getParameter("numero"));

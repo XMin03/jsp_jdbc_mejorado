@@ -62,7 +62,6 @@
             errores.add("Fecha no puede estar vacío");
         }
     //FIN CÓDIGO DE VALIDACIÓN
-
     if (errores.isEmpty()) {
         Connection conn = null;
         PreparedStatement ps = null;

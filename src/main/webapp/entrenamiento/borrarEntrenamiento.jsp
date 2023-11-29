@@ -14,6 +14,7 @@
 </head>
 <body>
 <%
+    //comprobacion basica
     boolean valida = true;
     int codigo = -1;
     try {
@@ -22,7 +23,7 @@
         nfe.printStackTrace();
         valida = false;
     }
-
+    //delete
     if (valida) {
         Connection conn = null;
         PreparedStatement ps = null;

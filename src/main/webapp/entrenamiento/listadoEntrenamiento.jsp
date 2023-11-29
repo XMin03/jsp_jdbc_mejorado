@@ -18,6 +18,7 @@
 <body>
 <h1>Listado de Entrenamiento</h1>
 <%
+    //conexion
     Connection conexion=null;
     Statement s=null;
     ResultSet listado=null;
@@ -30,6 +31,7 @@
 <table>
     <tr><th>Codigo</th><th>Socio</th><th>Tipo</th><th>Ubicacion</th><th>Fecha</th><th><a href="formularioEntrenamiento.jsp">+</a></th></tr>
     <%
+        //imprimir
         while (listado.next()) {
           out.println("<tr><td>"+listado.getString("entrenamientoID") + "</td>");
           out.println("<td>" + listado.getString("nombre") + "</td>");
@@ -38,6 +40,7 @@
           out.println("<td>" + listado.getString("fecha_realizacion") + "</td>");
     %>
     <td>
+        <!-- boton -->
         <form method="get" action="borrarEntrenamiento.jsp">
             <input type="hidden" name="codigo" value="<%=listado.getString("entrenamientoID") %>"/>
             <input type="submit" value="borrar">

@@ -16,6 +16,7 @@
     <tr><th>Código</th><th>Nombre</th><th>Estatura</th><th>Edad</th><th>Localidad</th></tr>
     <tr><td>
 <%
+    // lo mismo que pide numero socio pero sin while.
     PreparedStatement ps=null;
     Connection conexion=null;
     ResultSet listado=null;

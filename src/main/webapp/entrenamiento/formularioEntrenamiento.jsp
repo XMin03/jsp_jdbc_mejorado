@@ -12,6 +12,7 @@
 </head>
 <body>
 <h2>Introduzca los datos del nuevo entrenamiento:</h2>
+<!-- formulario -->
 <form method="get" action="grabarEntrenamiento.jsp">
     Nº entrenamiento <input type="text" name="idEntrenamiento"/></br>
     Nº socio <input type="text" name="idSocio"/></br>
@@ -24,6 +25,7 @@
     fecha <input type="date" name="fecha"/></br>
     <input type="submit" value="Aceptar">
 </form>
+<!-- errores -->
 <table>
     <tr>
         <%
